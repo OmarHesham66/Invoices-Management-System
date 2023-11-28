@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Models\User;
+use App\Events\ActiveCode;
 use Illuminate\Http\Request;
 use App\Mail\VerificationMail;
 use App\Http\Controllers\Controller;
@@ -18,26 +19,27 @@ class AuthController extends Controller
     {
         return view('Auth.login');
     }
-    public function index_register()
-    {
-        return view('Auth.register');
-    }
+    // public function index_register()
+    // {
+    //     return view('Auth.register');
+    // }
     public function login(Request $request, Login $login)
     {
-        $check = $login->login($request);
-        if ($check === 'user') {
+        $check = $login->login($request, 'web');
+        if ($check) {
             return redirect()->route('panal.index');
-        } elseif ($check === 'admin') {
+        }/* elseif ($check === 'admin') {
             return redirect()->route('panal.index');
-        } else {
+        } */ else {
             return redirect()->back()->withErrors('The Email Or Password Is Invalid', 'login');
         }
     }
-    public function register(Register $register, Request $request)
-    {
-        $register->register($request);
-        return redirect()->route('auth.get_verify');
-    }
+    // public function register(Register $register, Request $request)
+    // {
+    //     $user = $register->register($request);
+    //     event(new ActiveCode($user));
+    //     return redirect()->route('auth.get_verify');
+    // }
     public function get_verify()
     {
         return view('Auth.verify');
@@ -54,7 +56,7 @@ class AuthController extends Controller
     public function resend_code()
     {
         $user = User::find(auth()->id())->GenerateCode();
-        Mail::to($user->email)->send(new VerificationMail($user));
+        Mail::to($user->email)->queue(new VerificationMail($user));
         return response()->json([
             'message' => 'done'
         ], 200);

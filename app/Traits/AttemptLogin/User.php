@@ -10,6 +10,6 @@ trait User
 {
     public function attempt_login_user($request)
     {
-        return Auth::guard('web')->attempt($request->except('_token'), $request->post('remember'));
+        return Auth::attempt($request->except('_token'), $request->post('remember'));
     }
 }

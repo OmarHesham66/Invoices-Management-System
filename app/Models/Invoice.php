@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SaveAttachments\Attachment;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -54,5 +55,12 @@ class Invoice extends Model
     public function User()
     {
         return $this->belongsTo(User::class, 'user', 'id');
+    }
+    public static function scopeGetDate(Builder $q, $request)
+    {
+        return $q->where(function ($query) use ($request) {
+            $query->where('created_at', '<=', $request->post('From'))
+                ->where('created_at', '>=', $request->post('To'));
+        });
     }
 }

@@ -47,7 +47,9 @@ class ArchiveInvoiceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        Invoice::onlyTrashed()->where('id', $id)->restore();
+        session()->flash('success', __('Restore Invoice'));
+        return redirect()->route('invoice.index');
     }
 
     /**

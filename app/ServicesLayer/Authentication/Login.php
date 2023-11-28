@@ -15,11 +15,9 @@ class Login
             'password' => 'required'
         ]);
         if ($this->attempt_login_user($request)) {
-            return 'user';
-        } elseif ($this->attempt_login_admin($request)) {
-            return 'admin';
+            return true;
         } else {
-            return redirect()->back()->withErrors('The Email Or Password Is Invalid');
+            return false;
         }
     }
 }

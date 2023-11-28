@@ -16,9 +16,13 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($status = null)
     {
-        $invoices = Invoice::Paginate(COUNTER);
+        if ($status) {
+            $invoices = Invoice::where('status', $status)->Paginate(COUNTER);
+        } else {
+            $invoices = Invoice::Paginate(COUNTER);
+        }
         return view('Site.Invoices.invoices', compact('invoices'));
     }
 
@@ -49,23 +53,6 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.index');
         }
         session()->flash('success', __('Created Invoice'));
-        return redirect()->route('invoice.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show_status(Invoice $invoice)
-    {
-        return view('Site.Invoices.Crud.edit-status', compact('invoice'));
-    }
-    public function apply_status(Request $request, Invoice $invoice)
-    {
-        $request->validate(['status' => 'required', 'TimeOfChangeStatus' => 'required']);
-        $invoice->status = $request->status;
-        $invoice->save();
-        $invoice->Details()->create(['created_at' => $request->TimeOfChangeStatus, 'status' => $request->status]);
-        session()->flash('success', __('Updated Status Of Invoice'));
         return redirect()->route('invoice.index');
     }
 
@@ -106,16 +93,23 @@ class InvoiceController extends Controller
         session()->flash('success', __('Archived Invoice'));
         return redirect()->route('invoice.index');
     }
-    public function restore($id)
-    {
-        Invoice::onlyTrashed()->where('id', $id)->restore();
-        session()->flash('success', __('Restore Invoice'));
-        return redirect()->route('invoice.index');
-    }
     public function destroy(Request $request, Invoice $invoice)
     {
         $invoice->forceDelete();
         session()->flash('success', __('Deleted Invoice'));
+        return redirect()->route('invoice.index');
+    }
+    public function show_status(Invoice $invoice)
+    {
+        return view('Site.Invoices.Crud.edit-status', compact('invoice'));
+    }
+    public function apply_status(Request $request, Invoice $invoice)
+    {
+        $request->validate(['status' => 'required', 'TimeOfChangeStatus' => 'required']);
+        $invoice->status = $request->status;
+        $invoice->save();
+        $invoice->Details()->create(['created_at' => $request->TimeOfChangeStatus, 'status' => $request->status]);
+        session()->flash('success', __('Updated Status Of Invoice'));
         return redirect()->route('invoice.index');
     }
     public function GetAllProductsByOneSection($id)

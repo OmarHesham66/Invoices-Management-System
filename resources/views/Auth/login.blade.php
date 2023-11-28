@@ -34,10 +34,10 @@
       </div>
     </form>
 
-    <div class="form-link">
+    {{-- <div class="form-link">
       <span>Don't have an account? <a href="{{ route('auth.index.register') }}"
           class="link signup-link">Signup</a></span>
-    </div>
+    </div> --}}
   </div>
 
   <div class="line"></div>
@@ -55,9 +55,6 @@
       <span>Login with Google</span>
     </a>
   </div>
-  {{-- @php
-  dd($errors->login->first());
-  @endphp --}}
 </div>
 @endsection
 @push('js')

@@ -16,12 +16,12 @@ class InvoiceDetailsController extends Controller
     }
     public function show_file(Invoice $invoice)
     {
-        return response()->file('files/' . $invoice->invoice_number . $invoice->attachment);
+        return response()->file('files/' . $invoice->invoice_number . '/' . $invoice->attachment);
     }
 
     public function download_file(Invoice $invoice)
     {
-        return response()->download('files/' . $invoice->invoice_number . $invoice->attachment, $invoice->attachment);
+        return response()->download('files/' . $invoice->invoice_number . '/' . $invoice->attachment, $invoice->attachment);
     }
     public function delete_file(Invoice $invoice)
     {

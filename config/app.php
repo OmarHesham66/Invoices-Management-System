@@ -160,7 +160,8 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Spatie\Permission\PermissionServiceProvider::class,
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -183,7 +184,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'Invoice' => App\Models\Invoice::class,
     ])->toArray(),
 
 ];

@@ -19,7 +19,6 @@ $(function () {
             url: "/get_products_by_bank/" + $(this).val(),
             dataType: "json",
             success: function (response) {
-                // console.log(response.product);
                 if (response.products.length > 0) {
                     response.products.forEach((element) => {
                         $("#product").empty();

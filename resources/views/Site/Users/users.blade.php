@@ -24,6 +24,10 @@
 <div class="row row-sm">
     <!--div-->
     <div class="col-xl-12">
+        <div class="col-sm-6 col-md-4 col-xl-2 mb-2">
+            <a href="{{ route('user.create') }}" class="modal-effect btn btn-outline-primary btn-block">
+                Add User</a>
+        </div>
         <div class="card">
             <div class="card-header pb-0">
                 <div class="d-flex justify-content-between">
@@ -36,32 +40,56 @@
                     <table class="table text-md-nowrap" id="example1">
                         <thead>
                             <tr>
-                                <th class="wd-15p border-bottom-0">{{ __('Invoice Number') }}</th>
-                                <th class="wd-15p border-bottom-0">{{ __('Invoice Created At') }}</th>
-                                <th class="wd-20p border-bottom-0">{{ __('Due Date') }}</th>
+                                <th class="wd-15p border-bottom-0">#</th>
+                                <th class="wd-15p border-bottom-0">{{ __('Name') }}</th>
+                                <th class="wd-15p border-bottom-0">{{ __('Email') }}</th>
+                                <th class="wd-20p border-bottom-0">{{ __('Photo') }}</th>
                                 <th class="wd-20p border-bottom-0">{{ __('Status') }}</th>
-                                <th class="wd-20p border-bottom-0">{{ __('Product') }}</th>
-                                <th class="wd-20p border-bottom-0">{{ __('Section') }}</th>
-                                <th class="wd-20p border-bottom-0">{{ __('Vat') }}</th>
-                                <th class="wd-20p border-bottom-0">{{ __('Discount') }}</th>
-                                <th class="wd-20p border-bottom-0">{{ __('Total') }}</th>
-                                <th class="wd-20p border-bottom-0">{{ __('Notes') }}</th>
+                                <th class="wd-20p border-bottom-0">{{ __('Role') }}</th>
+                                <th class="wd-20p border-bottom-0">{{ __('Careated At') }}</th>
+                                <th class="wd-20p border-bottom-0">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($invoices as $row => $invoice)
+                            @foreach ($users as $row => $user)
                             <tr>
                                 <th class="wd-15p border-bottom-0">{{ $row +1 }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->invoice_number }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->date_create_invoice }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->due_date_invoice }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->status }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->product }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->section }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->vat }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->discount }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->total }}</th>
-                                <th class="wd-15p border-bottom-0">{{ $invoice->notes }}</th>
+                                <th class="wd-15p border-bottom-0">{{ $user->name }}</th>
+                                <th class="wd-15p border-bottom-0">{{ $user->email }}</th>
+                                <th class="wd-15p border-bottom-0"><img src="{{ asset($user->photo) }}" width="45px"
+                                        height="45px"></th>
+                                <th class="wd-15p border-bottom-0">{{ $user->status }}</th>
+                                <th class="wd-15p border-bottom-0">[{{ implode(' ,
+                                    ',$user->roles()->pluck('name')->toArray()) }}]</th>
+                                <th class="wd-15p border-bottom-0">{{ $user->created_at }}</th>
+                                <th class="wd-15p border-bottom-0">
+                                    <a class="modal-effect btn btn-sm btn-info"
+                                        href="{{ route('user.edit',$user->id) }}"><i class="las la-pen"></i>
+                                    </a>
+                                    <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                        data-toggle="modal" href="#modaldemo{{ $row }}"><i class="las la-trash"></i></a>
+                                    <div class="modal" id="modaldemo{{ $row }}">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content modal-content-demo">
+                                                <div class="modal-header">
+                                                    <h6 class="modal-title">Delete User</h6><button aria-label="Close"
+                                                        class="close" data-dismiss="modal" type="button"><span
+                                                            aria-hidden="true">&times;</span></button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ route('user.destroy',$user->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn ripple btn-danger" type="submit">Delete
+                                                        </button>
+                                                    </form>
+                                                    <button class="btn ripple btn-secondary" data-dismiss="modal"
+                                                        type="button">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
                             </tr>
                             @endforeach
 

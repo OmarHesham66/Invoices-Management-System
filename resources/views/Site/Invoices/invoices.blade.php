@@ -22,14 +22,14 @@
 @section('content')
 <!-- row -->
 @if (session()->has('success'))
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
 	<strong>{{ session()->get('success') }}</strong>
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
 </div>
 @if (session()->has('update'))
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
 	<strong>{{ session()->get('update') }}</strong>
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
@@ -106,7 +106,6 @@
 								<td>{{ $invoice->vat }}</td>
 								<td>{{ $invoice->total }}</td>
 								<td>{{ $invoice->notes }}</td>
-
 								@if (URL::current()!=url('/archive/invoices'))
 								<td>
 									<a class="modal-effect btn btn-sm btn-info"
@@ -143,11 +142,15 @@
 											</div>
 										</div>
 									</div>
+									<a class="modal-effect btn btn-sm btn-info" href="{{ route('show.print') }}">{{
+										__('Print Invoice')
+										}}</i>
+									</a>
 								</td>
 								@else
 								<td>
 									<a class="modal-effect btn btn-sm btn-info"
-										href="{{ route('invoice.restore',$invoice->id) }}">{{ __('Un-Archive Invoice')
+										href="{{ route('invoices.edit',$invoice->id) }}">{{ __('Un-Archive Invoice')
 										}}</i>
 									</a>
 								</td>

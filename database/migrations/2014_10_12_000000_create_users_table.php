@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('photo');
+            $table->enum('status', [0, 1])->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verifiy_code')->nullable();
             $table->dateTime('code_expire_at')->nullable();

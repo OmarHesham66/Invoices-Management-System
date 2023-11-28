@@ -1,0 +1,21 @@
+{
+    "Main" : "الفواتير",
+    "Dashboard" : "الصفحه الرئيسيه",
+    "Invoices" : "الفواتير",
+    "Add Invoices" : "اضافه الفواتير",
+    "All Invoices" : " الفواتير",
+    "All Invoices Paid" : " الفواتير المدفوعه",
+    "All Invoices Not Paid" : " الفواتير الغير مدفوعه",
+    "All Invoices Partaily Paid" : "الفواتير المدفوعه جزئيا",
+    "Archive Invoices" : "ارشيف الفواتير ",
+    "Invoices System" : "نظام الفواتير",
+    "Filteration" : "التصنيف",
+    "Invoices Filteration" : "تصنيف الفواتير",
+    "Banks Filteration" : "تصنيف البنوك",
+    "Users" : "المستخدمين",
+    "All Users" : "كل المستخدمين",
+    "Permissions Users" : "صلاحيات المستخدمين",
+    "Settings" : "الاعدادات",
+    "Sections" : "الاقسام",
+    "Products" : "المنتجات"
+}
